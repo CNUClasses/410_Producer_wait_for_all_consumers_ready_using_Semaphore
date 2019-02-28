@@ -19,14 +19,11 @@ void Semaphore::wait() {
 	count--;
 	while (count < 0)
 		cv.wait(mlk);
-	
-	cout<<"producer Done Waiting, count is "<<count<<endl;
 }
 void Semaphore::signal() {
 	{
 		unique_lock<mutex> mlk(m);
 		count++;
-		cout<<"Consumer ready"<<endl;
 	}
 	cv.notify_all();
 }

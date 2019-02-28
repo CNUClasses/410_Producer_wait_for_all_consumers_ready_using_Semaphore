@@ -18,18 +18,25 @@ using namespace std;
 const int NUMB_CONSUMERS = 5;
 const int NUMB_PRODUCERS = 1;
 
+//initialize to neg number
 Semaphore s(-(NUMB_CONSUMERS-NUMB_PRODUCERS) );
+mutex m_cout;
 
 void producer(int numbcounts) {	
 	//will wait until all 5 threads have signaled and then proceed
 	s.wait();
 
 	//do work here knowing all threads have started
+	unique_lock<mutex> mlk(m_cout);
+	cout<<"Producer proceeding now that consumers ready"<<endl;
 }
 
 void consumer(int id) {
 	//will wait until all 5 threads have signaled and then proceed
 	s.signal();
+
+	unique_lock<mutex> mlk(m_cout);
+	cout<<"Consumer "<<id<< " ready"<<endl;
 }
 
 int main() {
