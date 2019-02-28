@@ -17,9 +17,9 @@ public:
 
 	void wait();
 	void signal();
-	
-private:
 	volatile int count;
+
+private:
 	std::mutex m;
 	std::condition_variable cv;
 };
