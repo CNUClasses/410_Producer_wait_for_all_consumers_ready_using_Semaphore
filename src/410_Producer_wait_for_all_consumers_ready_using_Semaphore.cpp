@@ -21,10 +21,10 @@ const int NUMB_PRODUCERS = 1;
 Semaphore s(-(NUMB_CONSUMERS-NUMB_PRODUCERS) );
 
 void producer(int numbcounts) {	
-//	s.signal();  //take care of the decrement associated with this thread
-	
 	//will wait until all 5 threads have signaled and then proceed
 	s.wait();
+
+	//do work here knowing all threads have started
 }
 
 void consumer(int id) {
