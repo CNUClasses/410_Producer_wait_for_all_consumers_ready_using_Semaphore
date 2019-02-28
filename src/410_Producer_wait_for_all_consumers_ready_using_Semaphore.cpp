@@ -15,18 +15,13 @@
 #include "Semaphore.h"
 
 using namespace std;
-const int NUMB_THREADS_TO_WAIT_ON = 5;
+const int NUMB_CONSUMERS = 5;
+const int NUMB_PRODUCERS = 1;
 
-Semaphore s(-NUMB_THREADS_TO_WAIT_ON);
-mutex m;
-
-void ts_out(string info){
-	lock_guard<mutex> lck(m);
-	cout<<info<<endl;
-}
+Semaphore s(-(NUMB_CONSUMERS-NUMB_PRODUCERS) );
 
 void producer(int numbcounts) {	
-	s.signal();  //take care of the decrement associated with this thread
+//	s.signal();  //take care of the decrement associated with this thread
 	
 	//will wait until all 5 threads have signaled and then proceed
 	s.wait();
@@ -38,12 +33,12 @@ void consumer(int id) {
 }
 
 int main() {
+	thread t_producer(producer, 10);
 	thread t_consumer1(consumer, 1);
 	thread t_consumer2(consumer, 2);
 	thread t_consumer3(consumer, 3);
 	thread t_consumer4(consumer, 4);
 	thread t_consumer5(consumer, 5);
-	thread t_producer(producer, 10);
 
 	t_consumer1.join();
 	t_consumer2.join();
