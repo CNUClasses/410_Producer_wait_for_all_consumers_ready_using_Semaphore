@@ -16,10 +16,9 @@
 
 using namespace std;
 const int NUMB_CONSUMERS = 5;
-const int NUMB_PRODUCERS = 1;
 
-//initialize to neg number
-Semaphore s(-(NUMB_CONSUMERS-NUMB_PRODUCERS) );
+//initialize to neg number (must get above 0 for producer to wake!)
+Semaphore s(-(NUMB_CONSUMERS-1) );
 mutex m_cout;
 
 void producer(int numbcounts) {	
